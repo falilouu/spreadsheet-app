@@ -22,6 +22,7 @@ if(isset($postdata) && !empty($postdata))
             {
                 if ($row['id'] == $value->id) 
                 {
+                    $verif = true;
                     break;
                 }
                 else
@@ -56,10 +57,11 @@ if(isset($postdata) && !empty($postdata))
             continue;
         }
 
-        $sql_select_id = "SELECT nom FROM users WHERE `id` ='{$id}'";
+        $sql_select_id = "SELECT nom FROM users WHERE `id` = $id";
         $res = mysqli_query($con, $sql_select_id);
+        $num_rows = mysqli_num_rows($res);
 
-        if ($res)
+        if ($num_rows == 1)
         {
             // Mise a jour des donnees de l'utilisateur
             $sql_update = "UPDATE `users` SET `id`='$id', `nom` = '$nom', `login`='$login', `password`='$password', `profil`='$profil' WHERE `id` = '{$id}'";
